@@ -223,20 +223,9 @@ a { color: inherit; }
 .team { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
 @media (max-width: 980px) { .team { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 380px) { .team { grid-template-columns: minmax(0, 1fr); } }
-.member {
-  position: relative; display: flex; flex-direction: column; justify-content: space-between; gap: 40px;
-  background: var(--bg); border: 2px solid var(--ink); padding: 20px 20px 22px; min-width: 0;
-  transition: transform .35s var(--ease), box-shadow .35s var(--ease);
-}
-.member:hover { transform: translate(-6px, -6px); box-shadow: 6px 6px 0 var(--red); }
-.member .corner { position: absolute; top: 16px; right: 16px; width: 30px; height: 30px; color: var(--red); transition: transform .45s var(--ease); }
-.member:hover .corner { transform: translate(3px, -3px) scale(1.12); }
-.monogram { font-family: var(--font-display); font-weight: 600; font-size: clamp(3rem, 5.5vw, 4.4rem); line-height: .9; letter-spacing: -.05em; }
-.monogram span { color: var(--red-text); }
-.member h3 { font-size: 1.18rem; font-weight: 600; line-height: 1.25; overflow-wrap: anywhere; }
-.member p { color: var(--muted); font-size: var(--fs-small); margin-top: 4px; }
-.member.is-tba { border-style: dashed; background: transparent; }
-.member.is-tba .monogram { color: var(--red-text); }
+.team-poster { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: contain; background: var(--paper); }
+.program-coming { border-top: 2px solid var(--ink); padding-top: 24px; }
+.program-coming h2 { margin-top: 18px; color: var(--red-text); font-size: var(--fs-h2); font-weight: 600; line-height: 1.02; }
 
 /* Ideas */
 .ideas-grid { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(40px, 6vw, 88px); align-items: start; }
@@ -485,51 +474,9 @@ a { color: inherit; }
 
   <section class="section" id="program">
     <div class="wrap">
-      <div class="section-head reveal">
-        <div>
-          <span class="label kicker"><svg class="mini-slashes" aria-hidden="true"><use href="#slashes"/></svg>Program</span>
-          <h2>Cztery osoby, cztery filary.</h2>
-        </div>
-        <p>Każdy punkt możecie rozwinąć albo poprawić. Wystarczy wysłać pomysł przez formularz niżej na stronie.</p>
-      </div>
-
-      <div class="pillars">
-        <article class="pillar reveal">
-          <div class="pillar-top"><svg class="mini-slashes" aria-hidden="true"><use href="#slashes"/></svg><h3>Głos uczniów</h3></div>
-          <p>Każdy może zgłosić sprawę i dowiedzieć się, co się z nią stało.</p>
-          <ul class="ticks">
-            <li>Skrzynka pomysłów online i na korytarzu</li>
-            <li>Otwarte spotkanie samorządu raz w miesiącu</li>
-            <li>Krótkie podsumowania po rozmowach z dyrekcją</li>
-          </ul>
-        </article>
-        <article class="pillar reveal">
-          <div class="pillar-top"><svg class="mini-slashes" aria-hidden="true"><use href="#slashes"/></svg><h3>Wydarzenia</h3></div>
-          <p>Szkoła to też wspólny czas poza lekcjami.</p>
-          <ul class="ticks">
-            <li>Dni tematyczne wybierane w głosowaniu uczniów</li>
-            <li>Turnieje międzyklasowe: siatkówka, quiz, e-sport</li>
-            <li>Szkolny koncert i open mic</li>
-          </ul>
-        </article>
-        <article class="pillar reveal">
-          <div class="pillar-top"><svg class="mini-slashes" aria-hidden="true"><use href="#slashes"/></svg><h3>Przejrzystość</h3></div>
-          <p>Samorząd działa jawnie i rozlicza się z tego, co obiecał.</p>
-          <ul class="ticks">
-            <li>Publiczny kalendarz akcji i terminów</li>
-            <li>Jawne rozliczenie budżetu samorządu</li>
-            <li>Status każdego zgłoszonego pomysłu</li>
-          </ul>
-        </article>
-        <article class="pillar reveal">
-          <div class="pillar-top"><svg class="mini-slashes" aria-hidden="true"><use href="#slashes"/></svg><h3>Pomoc w nauce</h3></div>
-          <p>Uczymy się razem i pomagamy sobie nawzajem.</p>
-          <ul class="ticks">
-            <li>Korepetycje: starsze klasy pomagają młodszym</li>
-            <li>Giełda używanych podręczników</li>
-            <li>Wspólny kalendarz sprawdzianów w każdej klasie</li>
-          </ul>
-        </article>
+      <div class="program-coming reveal">
+        <span class="label kicker"><svg class="mini-slashes" aria-hidden="true"><use href="#slashes"/></svg>Program</span>
+        <h2>Już wkrótce</h2>
       </div>
     </div>
   </section>
@@ -545,26 +492,10 @@ a { color: inherit; }
       </div>
 
       <div class="team">
-        <article class="member reveal">
-          <svg class="corner" aria-hidden="true"><use href="#slashes"/></svg>
-          <div class="monogram" aria-hidden="true">M<span>W</span></div>
-          <div><h3>Mateusz Wrzyszcz</h3><p>Komitet 4 dla 3</p></div>
-        </article>
-        <article class="member reveal">
-          <svg class="corner" aria-hidden="true"><use href="#slashes"/></svg>
-          <div class="monogram" aria-hidden="true">J<span>N</span></div>
-          <div><h3>Jan Nowak</h3><p>Komitet 4 dla 3</p></div>
-        </article>
-        <article class="member reveal">
-          <svg class="corner" aria-hidden="true"><use href="#slashes"/></svg>
-          <div class="monogram" aria-hidden="true">W<span>D</span></div>
-          <div><h3>Wojciech Doleżał</h3><p>Komitet 4 dla 3</p></div>
-        </article>
-        <article class="member is-tba reveal">
-          <svg class="corner" aria-hidden="true"><use href="#slashes"/></svg>
-          <div class="monogram" aria-hidden="true">?</div>
-          <div><h3>Czwarta osoba</h3><p>Przedstawimy już wkrótce</p></div>
-        </article>
+        <img class="team-poster reveal" src="osoby/wrzyszcz.png" alt="Plansza wyborcza Mateusza Wrzyszcza">
+        <img class="team-poster reveal" src="osoby/nowak.png" alt="Plansza wyborcza Jana Nowaka">
+        <img class="team-poster reveal" src="osoby/doleżał.png" alt="Plansza wyborcza Wojciecha Doleżała">
+        <img class="team-poster reveal" src="osoby/wróblewski.png" alt="Plansza wyborcza Macieja Wróblewskiego">
       </div>
     </div>
   </section>

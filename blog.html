@@ -156,14 +156,15 @@
     .submission-body img { display: block; max-width: 100%; height: auto; margin-block: 12px; }
     .submission-body iframe { width: min(100%, 560px); aspect-ratio: 16 / 9; border: 0; }
     .submission small { display: block; margin-top: 12px; color: var(--muted); }
-    .footer { padding-block: 36px 44px; color: var(--muted); font-size: .9rem; }
+    .footer { padding-block: 36px 44px; }
     .footer-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px 32px; }
     .footer-brand { display: flex; align-items: center; gap: 14px; min-width: 0; }
-    .footer-mark { display: grid; place-items: center; width: 48px; height: 48px; flex: none; border: 2px solid var(--ink); color: var(--red); font: 700 1rem var(--font-display); }
-    .footer-brand p { color: var(--muted); font-size: .9rem; line-height: 1.45; }
-    .footer-brand strong { color: var(--ink); font-family: var(--font-display); font-weight: 600; }
     .footer-links { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; }
-    .footer a { color: var(--ink); }
+    .footer-links a { color: var(--ink); }
+    .footer-brand img { width: 48px; height: 48px; flex: none; }
+    .footer-brand .school-logo { width: auto; height: 60px; }
+    .footer-brand p { font-size: .9rem; color: var(--muted); line-height: 1.45; }
+    .footer-brand strong { color: var(--ink); font-family: var(--font-display); font-weight: 600; }
     .footer small { color: var(--muted); font-size: .84rem; }
     .privacy { padding-block: 48px 64px; border-top: 1px solid var(--line); background: #fff; }
     .privacy h2 { margin-top: 8px; font-size: clamp(1.7rem, 3vw, 2.2rem); }
@@ -336,12 +337,13 @@
   <footer class="footer">
     <div class="wrap footer-inner">
       <div class="footer-brand">
-        <span class="footer-mark" aria-hidden="true">4/3</span>
-        <p><strong>Komitet 4 dla 3</strong><br>III LO im. A. Mickiewicza · Wrocław</p>
+        <img src="logo.png" alt="" width="48" height="48">
+        <img class="school-logo" src="school-logo.png" alt="Logo III LO we Wrocławiu" width="52" height="60">
+        <p><strong>Komitet wyborczy 4 dla 3</strong><br>III Liceum Ogólnokształcące im. Adama Mickiewicza we Wrocławiu</p>
       </div>
       <nav class="footer-links" aria-label="Linki w stopce">
         <a href="#rodo">RODO</a>
-        <a href="index.html">Wróć na stronę główną</a>
+        <a href="index.html">Strona główna</a>
       </nav>
       <small>Wybory do Samorządu Szkolnego · rok szkolny 2026/2027</small>
     </div>

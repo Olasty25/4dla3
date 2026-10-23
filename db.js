@@ -2,8 +2,8 @@
    Uzupełnij adres projektu i klucz publiczny (anon / publishable) z Project Settings → API.
    Schemat tabel jest w pliku supabase.sql. Dopóki pola są puste, formularze działają jak wcześniej. */
 (() => {
-  const SUPABASE_URL = '';
-  const SUPABASE_ANON_KEY = '';
+  const SUPABASE_URL = 'https://mzunnwppaieupyjqkqhf.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_IwqhagWD4AywR9ffQYh7tQ_GApXGojt';
 
   window.submissionsDb = {
     enabled: Boolean(SUPABASE_URL && SUPABASE_ANON_KEY),

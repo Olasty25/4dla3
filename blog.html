@@ -123,10 +123,15 @@
     .submission-body img { display: block; max-width: 100%; height: auto; margin-block: 12px; }
     .submission-body iframe { width: min(100%, 560px); aspect-ratio: 16 / 9; border: 0; }
     .submission small { display: block; margin-top: 12px; color: var(--muted); }
-    .footer { padding-block: 28px; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; }
-    .footer-inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
-    .footer-links { display: flex; flex-wrap: wrap; gap: 18px; }
+    .footer { padding-block: 36px 44px; color: var(--muted); font-size: .9rem; }
+    .footer-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px 32px; }
+    .footer-brand { display: flex; align-items: center; gap: 14px; min-width: 0; }
+    .footer-mark { display: grid; place-items: center; width: 48px; height: 48px; flex: none; border: 2px solid var(--ink); color: var(--red); font: 700 1rem var(--font-display); }
+    .footer-brand p { color: var(--muted); font-size: .9rem; line-height: 1.45; }
+    .footer-brand strong { color: var(--ink); font-family: var(--font-display); font-weight: 600; }
+    .footer-links { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; }
     .footer a { color: var(--ink); }
+    .footer small { color: var(--muted); font-size: .84rem; }
     .privacy { padding-block: 48px 64px; border-top: 1px solid var(--line); background: #fff; }
     .privacy h2 { margin-top: 8px; font-size: clamp(1.7rem, 3vw, 2.2rem); }
     .privacy-copy { display: grid; gap: 12px; max-width: 800px; margin-top: 16px; color: #3b3537; }
@@ -289,8 +294,8 @@
         <span class="eyebrow">Informacja o prywatności</span>
         <h2 id="rodo-title">RODO</h2>
         <div class="privacy-copy">
-          <p>W formularzu możesz podać treść wpisu, podpis lub pseudonim, klasę oraz linki do zdjęć i filmów. Podawaj tylko informacje potrzebne do udziału w konkursie i nie umieszczaj w zgłoszeniu danych innych osób bez ich zgody.</p>
-          <p>Jeśli strona ma dostęp do skrzynki konkursowej, zgłoszenie trafia do komitetu 4 dla 3 w celu przeprowadzenia konkursu i kontaktu w sprawie ewentualnej publikacji. Bez tego dostępu zgłoszenie nie jest wysyłane — możesz je skopiować i przekazać organizatorom.</p>
+          <p>W formularzu pomysłów możesz podać treść propozycji, kategorię, klasę i podpis. W zgłoszeniu blogowym możesz podać treść wpisu, podpis lub pseudonim, klasę oraz linki do zdjęć i filmów. Podawaj tylko informacje potrzebne do udziału i nie umieszczaj danych innych osób bez ich zgody.</p>
+          <p>Gdy strona ma dostęp do skrzynki konkursowej, zgłoszenia trafiają do komitetu 4 dla 3, aby rozpatrzyć pomysły lub przeprowadzić konkurs i skontaktować się z autorem w sprawie ewentualnej publikacji. Jeśli strona nie ma dostępu do bazy, zgłoszenie nie jest wysyłane i można je skopiować, by przekazać je organizatorom.</p>
           <p>Wpisywany szkic jest automatycznie przechowywany lokalnie w pamięci przeglądarki na używanym urządzeniu. Nie jest przez ten mechanizm wysyłany do komitetu. Możesz usunąć go, kasując treść formularza albo dane witryny w ustawieniach przeglądarki.</p>
           <p>W sprawie przetwarzania zgłoszenia, jego usunięcia lub realizacji praw dotyczących danych skontaktuj się z organizatorem konkursu przez komitet 4 dla 3 w III LO im. Adama Mickiewicza we Wrocławiu.</p>
         </div>
@@ -300,11 +305,15 @@
 
   <footer class="footer">
     <div class="wrap footer-inner">
-      <span>4 dla 3 · III LO im. Adama Mickiewicza we Wrocławiu</span>
+      <div class="footer-brand">
+        <span class="footer-mark" aria-hidden="true">4/3</span>
+        <p><strong>Komitet 4 dla 3</strong><br>III LO im. A. Mickiewicza · Wrocław</p>
+      </div>
       <nav class="footer-links" aria-label="Linki w stopce">
         <a href="#rodo">RODO</a>
         <a href="index.html">Wróć na stronę główną</a>
       </nav>
+      <small>Wybory do Samorządu Szkolnego · rok szkolny 2026/2027</small>
     </div>
   </footer>
 

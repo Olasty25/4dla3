@@ -9,4 +9,4 @@ To statyczna strona HTML — nie wymaga instalowania zależności ani budowania 
 
 Strona główna jest w pliku `index.html`.
 
-Konkurs blogowy znajduje się na osobnej stronie `blog.html`. Formularze pomysłów i konkursu korzystają z opcjonalnego środowiska `window.claude`. Po wdrożeniu poza tym środowiskiem formularz konkursowy pozwala przygotować i skopiować zgłoszenie, ale nie zapisuje go w skrzynce komitetu.
+Konkurs blogowy znajduje się na osobnej stronie `blog.html`. Formularze pomysłów i konkursu korzystają z opcjonalnego środowiska `window.claude`. Formularz blogowy automatycznie zapisuje szkic w pamięci lokalnej przeglądarki, a jego edytor obsługuje formatowanie tekstu oraz wstawianie zdjęć i filmów z publicznych adresów URL. Po wdrożeniu poza środowiskiem `window.claude` zgłoszenie można przygotować i skopiować, ale nie trafia ono do skrzynki komitetu.

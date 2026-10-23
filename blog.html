@@ -34,13 +34,19 @@
     :focus-visible { outline: 3px solid var(--red); outline-offset: 3px; }
     .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
     .wrap { width: min(1120px, calc(100% - 40px)); margin-inline: auto; }
-    .site-header { position: sticky; top: 0; z-index: 2; background: #fff; border-bottom: 1px solid var(--line); }
+    .site-header { position: sticky; top: 0; z-index: 20; background: #fff; border-bottom: 1px solid transparent; transition: border-color .3s; }
+    .site-header.is-compact { border-bottom-color: var(--line); }
     .header-inner { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; font-family: var(--font-display); font-weight: 700; }
-    .brand-mark { display: grid; place-items: center; width: 44px; height: 44px; border: 2px solid var(--ink); color: var(--red); font-size: 1.05rem; }
-    .brand small { display: block; color: var(--muted); font: 400 .78rem/1.3 var(--font-body); }
-    .nav { display: flex; align-items: center; gap: 22px; }
-    .nav a:not(.btn) { text-decoration: none; font-family: var(--font-display); font-weight: 500; }
+    .brand { display: flex; align-items: center; gap: 14px; min-width: 0; text-decoration: none; }
+    .brand-mark { display: grid; place-items: center; width: 52px; height: 52px; flex: none; border: 2px solid var(--ink); color: var(--red); font: 700 1.05rem var(--font-display); }
+    .brand-sep { width: 1px; height: 40px; flex: none; background: var(--line-strong); }
+    .brand-text { display: grid; line-height: 1.25; }
+    .brand-text strong { font: 600 1rem var(--font-display); }
+    .brand-text span { color: var(--muted); font-size: .82rem; }
+    .nav { display: flex; align-items: center; gap: 28px; }
+    .nav a:not(.btn) { position: relative; padding-block: 4px; font: 500 .98rem var(--font-display); text-decoration: none; }
+    .nav a:not(.btn)::after { content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 2px; background: var(--red); transform: scaleX(0); transform-origin: right; transition: transform .35s var(--ease); }
+    .nav a:not(.btn):hover::after { transform: scaleX(1); transform-origin: left; }
     .btn {
       display: inline-flex; justify-content: center; align-items: center; gap: .55em;
       border: 2px solid var(--red); padding: .68em 1.1em; background: var(--red); color: #fff;
@@ -81,6 +87,19 @@
     .textarea { min-height: 260px; resize: vertical; }
     .input:focus, .textarea:focus { outline: none; border-color: var(--red); box-shadow: 4px 4px 0 var(--red-soft); }
     .input::placeholder, .textarea::placeholder { color: var(--muted); opacity: .85; }
+    .editor-toolbar { display: flex; flex-wrap: wrap; gap: 6px; padding: 8px; border: 2px solid var(--line-strong); border-bottom: 0; background: #fff; }
+    .editor-toolbar button { min-width: 38px; min-height: 36px; padding: 5px 9px; border: 1px solid var(--line-strong); background: #fff; color: var(--ink); font: 600 .95rem var(--font-display); cursor: pointer; }
+    .editor-toolbar button:hover, .editor-toolbar button:focus-visible { border-color: var(--red); color: var(--red); }
+    .editor-toolbar .tool-separator { width: 1px; margin-inline: 3px; background: var(--line-strong); }
+    .editor { min-height: 260px; padding: 12px 14px; border: 2px solid var(--line-strong); background: #fff; color: var(--ink); font: 1rem/1.6 var(--font-body); overflow-wrap: anywhere; }
+    .editor:focus { outline: none; border-color: var(--red); box-shadow: 4px 4px 0 var(--red-soft); }
+    .editor:empty::before { content: attr(data-placeholder); color: var(--muted); opacity: .85; }
+    .editor h2, .editor h3 { margin-block: .8em .3em; }
+    .editor blockquote { margin: .8em 0; padding-left: 14px; border-left: 3px solid var(--red); color: var(--muted); }
+    .editor img { display: block; max-width: 100%; height: auto; margin-block: 12px; }
+    .editor iframe { width: min(100%, 560px); aspect-ratio: 16 / 9; border: 0; }
+    .editor-media { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 8px; align-items: center; }
+    .editor-help { color: var(--muted); font-size: .86rem; }
     .row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
     .field-meta, .form-submit { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px 18px; }
     .field-meta, .form-submit p { color: var(--muted); font-size: .86rem; }
@@ -99,28 +118,42 @@
     .submission { padding: 20px; border: 1px solid var(--line-strong); }
     .submission h3 { font-size: 1.3rem; }
     .submission p { margin-top: 10px; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .submission-body { margin-top: 12px; overflow-wrap: anywhere; }
+    .submission-body p, .submission-body ul, .submission-body ol, .submission-body blockquote { margin-block: 10px; }
+    .submission-body img { display: block; max-width: 100%; height: auto; margin-block: 12px; }
+    .submission-body iframe { width: min(100%, 560px); aspect-ratio: 16 / 9; border: 0; }
     .submission small { display: block; margin-top: 12px; color: var(--muted); }
     .footer { padding-block: 28px; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; }
     .footer-inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 18px; }
     .footer a { color: var(--ink); }
+    .privacy { padding-block: 48px 64px; border-top: 1px solid var(--line); background: #fff; }
+    .privacy h2 { margin-top: 8px; font-size: clamp(1.7rem, 3vw, 2.2rem); }
+    .privacy-copy { display: grid; gap: 12px; max-width: 800px; margin-top: 16px; color: #3b3537; }
     @media (max-width: 680px) {
       .wrap { width: min(100% - 32px, 1120px); }
       .header-inner { min-height: 66px; }
-      .brand small, .nav a:not(.btn) { display: none; }
+      .brand-text span, .nav a:not(.btn) { display: none; }
       .nav { gap: 8px; }
       .nav .btn { padding: .55em .7em; font-size: .85rem; }
       .ideas, .row { grid-template-columns: 1fr; }
+      .editor-media { grid-template-columns: 1fr 1fr; }
+      .editor-media .input { grid-column: 1 / -1; }
       .section { padding-block: 40px 68px; }
     }
+    @media (max-width: 520px) { .brand-text { display: none; } .nav { gap: 8px; } .nav .btn { padding: .55em .65em; font-size: .78rem; } }
+    @media (max-width: 400px) { .brand-sep { display: none; } .editor-toolbar button { min-width: 34px; padding-inline: 6px; } }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
   </style>
 </head>
 <body>
-  <header class="site-header">
+  <div id="top-sentinel" aria-hidden="true"></div>
+  <header class="site-header" id="site-header">
     <div class="wrap header-inner">
       <a class="brand" href="index.html" aria-label="4 dla 3, strona główna">
         <span class="brand-mark" aria-hidden="true">4/3</span>
-        <span>4 dla 3<small>Samorząd, który słucha</small></span>
+        <span class="brand-sep" aria-hidden="true"></span>
+        <span class="brand-text"><strong>Komitet 4 dla 3</strong><span>III LO im. A. Mickiewicza · Wrocław</span></span>
       </a>
       <nav class="nav" aria-label="Nawigacja główna">
         <a href="index.html">Strona główna</a>
@@ -186,7 +219,24 @@
               </div>
               <div class="field">
                 <label class="field-label" for="blog-text">Treść bloga</label>
-                <textarea class="textarea" id="blog-text" name="text" maxlength="20000" placeholder="Wklej tutaj swój tekst…" aria-describedby="blog-count err-text"></textarea>
+                <div class="editor-toolbar" role="toolbar" aria-label="Formatowanie tekstu">
+                <button type="button" data-command="bold" aria-label="Pogrubienie"><strong>B</strong></button>
+                <button type="button" data-command="italic" aria-label="Kursywa"><em>I</em></button>
+                <button type="button" data-command="underline" aria-label="Podkreślenie"><u>U</u></button>
+                <span class="tool-separator" aria-hidden="true"></span>
+                <button type="button" data-command="formatBlock" data-value="h2" aria-label="Nagłówek">H₂</button>
+                <button type="button" data-command="formatBlock" data-value="blockquote" aria-label="Cytat">„ ”</button>
+                <button type="button" data-command="insertUnorderedList" aria-label="Lista punktowana">• Lista</button>
+                <button type="button" data-command="insertOrderedList" aria-label="Lista numerowana">1. Lista</button>
+                </div>
+                <div class="editor" id="blog-text" name="text" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Treść bloga" data-placeholder="Napisz swój tekst…" aria-describedby="blog-count err-text"></div>
+                <div class="editor-media">
+                <label class="sr-only" for="media-url">Adres zdjęcia lub filmu</label>
+                <input class="input" id="media-url" type="url" placeholder="https://… adres zdjęcia lub filmu" aria-describedby="media-help">
+                <button class="btn btn-ghost" id="add-image" type="button">Dodaj zdjęcie</button>
+                <button class="btn btn-ghost" id="add-video" type="button">Dodaj film</button>
+                </div>
+                <p class="editor-help" id="media-help">Wstawiaj publiczne adresy zdjęć oraz linki YouTube lub Vimeo.</p>
                 <div class="field-meta"><span>Co najmniej 100 znaków</span><span class="count" id="blog-count">0 / 20 000</span></div>
                 <p class="field-error" id="err-text" hidden></p>
               </div>
@@ -234,12 +284,27 @@
         </section>
       </div>
     </section>
+    <section class="privacy" id="rodo" aria-labelledby="rodo-title">
+      <div class="wrap">
+        <span class="eyebrow">Informacja o prywatności</span>
+        <h2 id="rodo-title">RODO</h2>
+        <div class="privacy-copy">
+          <p>W formularzu możesz podać treść wpisu, podpis lub pseudonim, klasę oraz linki do zdjęć i filmów. Podawaj tylko informacje potrzebne do udziału w konkursie i nie umieszczaj w zgłoszeniu danych innych osób bez ich zgody.</p>
+          <p>Jeśli strona ma dostęp do skrzynki konkursowej, zgłoszenie trafia do komitetu 4 dla 3 w celu przeprowadzenia konkursu i kontaktu w sprawie ewentualnej publikacji. Bez tego dostępu zgłoszenie nie jest wysyłane — możesz je skopiować i przekazać organizatorom.</p>
+          <p>Wpisywany szkic jest automatycznie przechowywany lokalnie w pamięci przeglądarki na używanym urządzeniu. Nie jest przez ten mechanizm wysyłany do komitetu. Możesz usunąć go, kasując treść formularza albo dane witryny w ustawieniach przeglądarki.</p>
+          <p>W sprawie przetwarzania zgłoszenia, jego usunięcia lub realizacji praw dotyczących danych skontaktuj się z organizatorem konkursu przez komitet 4 dla 3 w III LO im. Adama Mickiewicza we Wrocławiu.</p>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer class="footer">
     <div class="wrap footer-inner">
       <span>4 dla 3 · III LO im. Adama Mickiewicza we Wrocławiu</span>
-      <a href="index.html">Wróć na stronę główną</a>
+      <nav class="footer-links" aria-label="Linki w stopce">
+        <a href="#rodo">RODO</a>
+        <a href="index.html">Wróć na stronę główną</a>
+      </nav>
     </div>
   </footer>
 
@@ -255,21 +320,246 @@
       const status = $('#blog-status');
       const MAX = 20000;
       const MIN = 100;
+      const DRAFT_KEY = '4dla3-blog-draft-v1';
+      const mediaUrl = $('#media-url');
+      let savedRange = null;
+      let saveTimer = null;
+
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(([entry]) => {
+          $('#site-header').classList.toggle('is-compact', !entry.isIntersecting);
+        }).observe($('#top-sentinel'));
+      }
 
       const updateCount = () => {
-        const length = text.value.length;
+        const length = text.innerText.trim().length;
         $('#blog-count').textContent = length.toLocaleString('pl-PL') + ' / 20 000';
         $('#blog-count').classList.toggle('is-over', length > MAX);
       };
-      text.addEventListener('input', updateCount);
+
+      const normalizeVideoUrl = value => {
+        let url;
+        try { url = new URL(value); } catch (_) { return null; }
+        if (url.protocol !== 'https:') return null;
+        const host = url.hostname.toLowerCase().replace(/^www\./, '');
+        let id = '';
+        if (host === 'youtu.be') id = url.pathname.slice(1).split('/')[0];
+        if (host === 'youtube.com' || host === 'm.youtube.com') {
+          if (url.pathname === '/watch') id = url.searchParams.get('v') || '';
+          else id = url.pathname.match(/^\/(?:embed|shorts)\/([A-Za-z0-9_-]+)/)?.[1] || '';
+        }
+        if (/^[A-Za-z0-9_-]{11}$/.test(id)) return 'https://www.youtube-nocookie.com/embed/' + id;
+        if (host === 'vimeo.com' || host === 'player.vimeo.com') {
+          id = url.pathname.match(/\/(?:video\/)?([0-9]+)/)?.[1] || '';
+          if (id) return 'https://player.vimeo.com/video/' + id;
+        }
+        return null;
+      };
+
+      const safeHttpUrl = value => {
+        try {
+          const url = new URL(value);
+          return url.protocol === 'https:' || url.protocol === 'http:' ? url.href : '';
+        } catch (_) { return ''; }
+      };
+
+      const sanitizeHtml = html => {
+        const parsed = new DOMParser().parseFromString(html, 'text/html');
+        const allowed = new Set(['P', 'BR', 'STRONG', 'B', 'EM', 'I', 'U', 'H2', 'H3', 'UL', 'OL', 'LI', 'BLOCKQUOTE', 'A', 'IMG', 'IFRAME']);
+        const cleanNodes = nodes => {
+          const fragment = document.createDocumentFragment();
+          nodes.forEach(node => {
+            if (node.nodeType === Node.TEXT_NODE) {
+              fragment.append(document.createTextNode(node.textContent));
+              return;
+            }
+            if (node.nodeType !== Node.ELEMENT_NODE) return;
+            const tag = node.tagName;
+            if (tag === 'IFRAME') {
+              const source = normalizeVideoUrl(node.getAttribute('src') || '');
+              if (source) {
+                const frame = document.createElement('iframe');
+                frame.src = source;
+                frame.title = 'Film w zgłoszeniu';
+                frame.loading = 'lazy';
+                frame.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-presentation');
+                frame.setAttribute('allowfullscreen', '');
+                fragment.append(frame);
+              }
+              return;
+            }
+            if (!allowed.has(tag)) {
+              fragment.append(cleanNodes(Array.from(node.childNodes)));
+              return;
+            }
+            const element = document.createElement(tag.toLowerCase());
+            if (tag === 'IMG') {
+              const source = safeHttpUrl(node.getAttribute('src') || '');
+              if (!source) return;
+              element.src = source;
+              element.alt = (node.getAttribute('alt') || 'Zdjęcie w zgłoszeniu').slice(0, 200);
+              element.loading = 'lazy';
+            } else if (tag === 'A') {
+              const href = safeHttpUrl(node.getAttribute('href') || '');
+              const mailto = (node.getAttribute('href') || '').match(/^mailto:[^\s@]+@[^\s@]+$/i);
+              if (href || mailto) {
+                element.setAttribute('href', href || mailto[0]);
+                element.setAttribute('rel', 'noopener noreferrer');
+                element.setAttribute('target', '_blank');
+              }
+            }
+            element.append(cleanNodes(Array.from(node.childNodes)));
+            fragment.append(element);
+          });
+          return fragment;
+        };
+        const result = document.createElement('div');
+        result.append(cleanNodes(Array.from(parsed.body.childNodes)));
+        return result.innerHTML;
+      };
+
+      const plainText = html => {
+        const container = document.createElement('div');
+        container.innerHTML = sanitizeHtml(html);
+        container.querySelectorAll('img').forEach(image => image.replaceWith(document.createTextNode('[Zdjęcie: ' + image.alt + ']')));
+        container.querySelectorAll('iframe').forEach(frame => frame.replaceWith(document.createTextNode('[Film]')));
+        container.querySelectorAll('br, p, h2, h3, li, blockquote').forEach(node => node.append(document.createTextNode('\n')));
+        return container.textContent.replace(/[ \t]+\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
+      };
+
+      const collectMedia = html => {
+        const container = document.createElement('div');
+        container.innerHTML = sanitizeHtml(html);
+        return Array.from(container.querySelectorAll('img, iframe'), node => node.src);
+      };
+
+      const saveRange = () => {
+        const selection = window.getSelection();
+        if (selection && selection.rangeCount && text.contains(selection.anchorNode)) {
+          savedRange = selection.getRangeAt(0).cloneRange();
+        }
+      };
+
+      const restoreRange = () => {
+        text.focus();
+        const selection = window.getSelection();
+        if (savedRange && selection) {
+          selection.removeAllRanges();
+          selection.addRange(savedRange);
+        }
+      };
+
+      const insertNode = node => {
+        restoreRange();
+        const selection = window.getSelection();
+        if (!selection || !selection.rangeCount || !text.contains(selection.anchorNode)) {
+          text.append(node);
+          return;
+        }
+        const range = selection.getRangeAt(0);
+        range.deleteContents();
+        range.insertNode(node);
+        range.setStartAfter(node);
+        range.collapse(true);
+        selection.removeAllRanges();
+        selection.addRange(range);
+        savedRange = range.cloneRange();
+        text.dispatchEvent(new Event('input', { bubbles: true }));
+      };
+
+      const saveDraft = () => {
+        window.clearTimeout(saveTimer);
+        saveTimer = window.setTimeout(() => {
+          const draft = {
+            title: title.value,
+            html: sanitizeHtml(text.innerHTML),
+            author: author.value,
+            className: className.value
+          };
+          if (!draft.title && !plainText(draft.html) && !draft.author && !draft.className) {
+            try { localStorage.removeItem(DRAFT_KEY); } catch (_) {
+              status.textContent = 'Nie udało się usunąć szkicu z tej przeglądarki.';
+            }
+            return;
+          }
+          try {
+            localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+            status.textContent = 'Szkic zapisany na tym urządzeniu.';
+          } catch (_) {
+            status.textContent = 'Nie udało się zapisać szkicu w tej przeglądarce.';
+          }
+        }, 500);
+      };
+
+      try {
+        const draft = JSON.parse(localStorage.getItem(DRAFT_KEY) || 'null');
+        if (draft && typeof draft === 'object') {
+          title.value = typeof draft.title === 'string' ? draft.title : '';
+          text.innerHTML = sanitizeHtml(typeof draft.html === 'string' ? draft.html : '');
+          author.value = typeof draft.author === 'string' ? draft.author : '';
+          className.value = typeof draft.className === 'string' ? draft.className : '';
+          status.textContent = 'Odtworzono zapisany szkic z tego urządzenia.';
+        }
+      } catch (_) {
+        status.textContent = 'Nie udało się odczytać szkicu z tej przeglądarki.';
+      }
+
+      form.addEventListener('input', () => {
+        updateCount();
+        saveDraft();
+      });
+      text.addEventListener('keyup', saveRange);
+      text.addEventListener('mouseup', saveRange);
+      document.addEventListener('selectionchange', saveRange);
       updateCount();
 
       document.querySelectorAll('.topic-button').forEach(button => {
         button.addEventListener('click', () => {
           title.value = button.dataset.title;
+          saveDraft();
           $('#zgloszenie').scrollIntoView({ behavior: 'smooth' });
           title.focus({ preventScroll: true });
         });
+      });
+
+      document.querySelectorAll('.editor-toolbar button').forEach(button => {
+        button.addEventListener('mousedown', event => event.preventDefault());
+        button.addEventListener('click', () => {
+          restoreRange();
+          document.execCommand(button.dataset.command, false, button.dataset.value || null);
+          saveRange();
+          text.dispatchEvent(new Event('input', { bubbles: true }));
+        });
+      });
+
+      $('#add-image').addEventListener('click', () => {
+        const source = safeHttpUrl(mediaUrl.value.trim());
+        if (!source) {
+          status.textContent = 'Wpisz prawidłowy adres HTTPS lub HTTP zdjęcia.';
+          mediaUrl.focus();
+          return;
+        }
+        const image = document.createElement('img');
+        image.src = source;
+        image.alt = 'Zdjęcie w zgłoszeniu';
+        insertNode(image);
+        mediaUrl.value = '';
+      });
+
+      $('#add-video').addEventListener('click', () => {
+        const source = normalizeVideoUrl(mediaUrl.value.trim());
+        if (!source) {
+          status.textContent = 'Wpisz prawidłowy link do filmu z YouTube lub Vimeo.';
+          mediaUrl.focus();
+          return;
+        }
+        const frame = document.createElement('iframe');
+        frame.src = source;
+        frame.title = 'Film w zgłoszeniu';
+        frame.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-presentation');
+        frame.setAttribute('allowfullscreen', '');
+        insertNode(frame);
+        mediaUrl.value = '';
       });
 
       const setError = (id, message) => {
@@ -312,6 +602,7 @@
         ];
         if (entry.className) lines.push('Klasa: ' + entry.className);
         lines.push('', entry.text);
+        if (entry.media.length) lines.push('', 'Multimedia:', ...entry.media);
         $('#fallback-text').value = lines.join('\n');
         $('#copy-note').textContent = '';
         status.textContent = '';
@@ -322,7 +613,8 @@
       form.addEventListener('submit', async event => {
         event.preventDefault();
         const titleValue = title.value.trim();
-        const textValue = text.value.trim();
+        const htmlValue = sanitizeHtml(text.innerHTML);
+        const textValue = plainText(htmlValue);
         const authorValue = author.value.trim();
         let firstInvalid = null;
 
@@ -350,6 +642,8 @@
           id: Math.random().toString(36).slice(2, 10) + Date.now().toString(36),
           title: titleValue,
           text: textValue,
+          html: htmlValue,
+          media: collectMedia(htmlValue),
           author: authorValue.slice(0, 60),
           className: className.value.trim().slice(0, 12),
           at: new Date().toISOString()
@@ -373,9 +667,13 @@
           }
           items.push(entry);
           await ref.set({ items, updatedAt: entry.at });
+          window.clearTimeout(saveTimer);
+          try { localStorage.removeItem(DRAFT_KEY); } catch (_) {
+            status.textContent = 'Zgłoszenie zapisano, ale szkicu nie udało się usunąć z tej przeglądarki.';
+          }
           form.reset();
+          text.innerHTML = '';
           updateCount();
-          status.textContent = '';
           show('ok');
           $('#ok-title').focus();
         } catch (error) {
@@ -437,8 +735,14 @@
             item.className = 'submission';
             const heading = document.createElement('h3');
             heading.textContent = entry.title;
-            const body = document.createElement('p');
-            body.textContent = entry.text;
+            const body = document.createElement('div');
+            body.className = 'submission-body';
+            body.innerHTML = typeof entry.html === 'string' ? sanitizeHtml(entry.html) : '';
+            if (!body.innerHTML) {
+              const paragraph = document.createElement('p');
+              paragraph.textContent = entry.text;
+              body.append(paragraph);
+            }
             const meta = document.createElement('small');
             const details = [entry.author || 'Bez podpisu'];
             if (entry.className) details.push('Klasa ' + entry.className);

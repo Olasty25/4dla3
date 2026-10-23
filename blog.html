@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Zgłoś wpis do konkursu blogowego 4 dla 3. Najciekawszy blog opublikujemy na stronie!">
+  <title>Konkurs blogowy — 4 dla 3</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=Jost:wght@400;500;600;700&display=swap">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #fff;
+      --ink: #1d1b1c;
+      --muted: #6f6567;
+      --line: #eee6e6;
+      --line-strong: #d8cccd;
+      --red: #c21d25;
+      --red-soft: #fcedee;
+      --font-display: "Jost", "Futura", "Century Gothic", system-ui, sans-serif;
+      --font-body: "Hanken Grotesk", "Segoe UI", Arial, system-ui, sans-serif;
+      --ease: cubic-bezier(.2, .8, .2, 1);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; background: var(--bg); color: var(--ink);
+      font: 1.0625rem/1.6 var(--font-body); -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; }
+    h1, h2, h3 { margin: 0; font-family: var(--font-display); text-wrap: balance; }
+    p { margin: 0; }
+    :focus-visible { outline: 3px solid var(--red); outline-offset: 3px; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+    .wrap { width: min(1120px, calc(100% - 40px)); margin-inline: auto; }
+    .site-header { position: sticky; top: 0; z-index: 2; background: #fff; border-bottom: 1px solid var(--line); }
+    .header-inner { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; font-family: var(--font-display); font-weight: 700; }
+    .brand-mark { display: grid; place-items: center; width: 44px; height: 44px; border: 2px solid var(--ink); color: var(--red); font-size: 1.05rem; }
+    .brand small { display: block; color: var(--muted); font: 400 .78rem/1.3 var(--font-body); }
+    .nav { display: flex; align-items: center; gap: 22px; }
+    .nav a:not(.btn) { text-decoration: none; font-family: var(--font-display); font-weight: 500; }
+    .btn {
+      display: inline-flex; justify-content: center; align-items: center; gap: .55em;
+      border: 2px solid var(--red); padding: .68em 1.1em; background: var(--red); color: #fff;
+      font: 600 1rem var(--font-display); text-decoration: none; cursor: pointer;
+      transition: background .2s, color .2s, transform .2s;
+    }
+    .btn:hover { background: var(--ink); border-color: var(--ink); color: #fff; }
+    .btn:active { transform: translateY(1px); }
+    .btn-ghost { color: var(--ink); background: transparent; border-color: var(--ink); }
+    .btn[disabled] { opacity: .65; cursor: progress; }
+    .hero { padding-block: clamp(60px, 10vw, 116px) clamp(46px, 7vw, 78px); }
+    .eyebrow { color: var(--red); font: 600 .78rem var(--font-display); letter-spacing: .16em; text-transform: uppercase; }
+    .hero h1 { max-width: 850px; margin-top: 18px; font-size: clamp(3rem, 8vw, 6rem); line-height: .98; letter-spacing: -.04em; }
+    .hero h1 em { color: var(--red); font-style: normal; }
+    .hero p { max-width: 680px; margin-top: 24px; color: #3b3537; font-size: clamp(1.1rem, 1.5vw, 1.28rem); }
+    .section { padding-block: 52px 92px; }
+    .section-heading { max-width: 720px; margin-bottom: 28px; }
+    .section-heading h2 { margin-top: 10px; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.05; letter-spacing: -.03em; }
+    .section-heading p { margin-top: 12px; color: var(--muted); }
+    .ideas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .idea-card { display: grid; align-content: start; gap: 12px; padding: 24px; border: 1px solid var(--line-strong); }
+    .idea-card h3 { font-size: 1.3rem; line-height: 1.2; }
+    .idea-card p { color: var(--muted); }
+    .idea-card .btn { justify-self: start; margin-top: 6px; }
+    .contest-note { margin-top: 28px; padding: 20px 24px; border-left: 4px solid var(--red); background: var(--red-soft); }
+    .contest-note strong { font-family: var(--font-display); }
+    .form-card { padding: clamp(22px, 4vw, 42px); border: 2px solid var(--ink); box-shadow: 10px 10px 0 var(--red); margin: 0 10px 10px 0; }
+    .form-card h2 { font-size: clamp(1.6rem, 3vw, 2rem); }
+    .form-card > p, .form-card .sub { margin-top: 6px; color: var(--muted); }
+    .form { display: grid; gap: 22px; margin-top: 26px; }
+    .field { display: grid; gap: 8px; min-width: 0; }
+    .field-label { font-family: var(--font-display); font-weight: 600; }
+    .field-label small { color: var(--muted); font: 400 .85rem var(--font-body); }
+    .input, .textarea {
+      width: 100%; border: 2px solid var(--line-strong); border-radius: 0; padding: 12px 14px;
+      background: #fff; color: var(--ink); font: 1rem/1.5 var(--font-body);
+    }
+    .textarea { min-height: 260px; resize: vertical; }
+    .input:focus, .textarea:focus { outline: none; border-color: var(--red); box-shadow: 4px 4px 0 var(--red-soft); }
+    .input::placeholder, .textarea::placeholder { color: var(--muted); opacity: .85; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .field-meta, .form-submit { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px 18px; }
+    .field-meta, .form-submit p { color: var(--muted); font-size: .86rem; }
+    .count { font-variant-numeric: tabular-nums; }
+    .count.is-over, .field-error { color: var(--red); }
+    .field-error { font-size: .9rem; }
+    .status { min-height: 1.5em; color: #3b3537; font-size: .92rem; }
+    .panel-msg { display: grid; justify-items: start; gap: 16px; }
+    .panel-msg h2:focus { outline: none; }
+    .panel-msg p { max-width: 620px; color: #3b3537; }
+    .panel-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+    .copy-note { min-height: 1.4em; color: var(--muted); font-size: .9rem; }
+    .inbox { margin-top: 72px; border-top: 2px solid var(--ink); padding-top: 28px; }
+    .inbox h2 { margin-top: 8px; font-size: 1.8rem; }
+    .inbox-list { display: grid; gap: 16px; margin: 22px 0 0; padding: 0; list-style: none; }
+    .submission { padding: 20px; border: 1px solid var(--line-strong); }
+    .submission h3 { font-size: 1.3rem; }
+    .submission p { margin-top: 10px; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .submission small { display: block; margin-top: 12px; color: var(--muted); }
+    .footer { padding-block: 28px; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; }
+    .footer-inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+    .footer a { color: var(--ink); }
+    @media (max-width: 680px) {
+      .wrap { width: min(100% - 32px, 1120px); }
+      .header-inner { min-height: 66px; }
+      .brand small, .nav a:not(.btn) { display: none; }
+      .nav { gap: 8px; }
+      .nav .btn { padding: .55em .7em; font-size: .85rem; }
+      .ideas, .row { grid-template-columns: 1fr; }
+      .section { padding-block: 40px 68px; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="index.html" aria-label="4 dla 3, strona główna">
+        <span class="brand-mark" aria-hidden="true">4/3</span>
+        <span>4 dla 3<small>Samorząd, który słucha</small></span>
+      </a>
+      <nav class="nav" aria-label="Nawigacja główna">
+        <a href="index.html">Strona główna</a>
+        <a href="#pomysly">Pomysły na wpis</a>
+        <a class="btn" href="#zgloszenie">Zgłoś bloga</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <span class="eyebrow">Konkurs blogowy 4 dla 3</span>
+        <h1>Twoja historia.<br><em>Nasza strona.</em></h1>
+        <p>Napisz o tym, co Cię ciekawi, zaskakuje albo rozśmiesza w szkolnym życiu. Wklej gotowy tekst do formularza — najciekawszy blog opublikujemy na stronie!</p>
+      </div>
+    </section>
+
+    <section class="section" id="pomysly">
+      <div class="wrap">
+        <div class="section-heading">
+          <span class="eyebrow">Nie wiesz, od czego zacząć?</span>
+          <h2>Podrzucamy kilka tematów</h2>
+          <p>To tylko inspiracje — możesz napisać o czymkolwiek, co warto opowiedzieć.</p>
+        </div>
+        <div class="ideas">
+          <article class="idea-card">
+            <h3>Wyjazd rozszerzenia z geografii do Portugalii</h3>
+            <p>Opisz miejsca, które zobaczyliście, niespodziewane przygody i lekcje, których nie da się odbyć w klasie.</p>
+            <button class="btn btn-ghost topic-button" type="button" data-title="Wyjazd rozszerzenia z geografii do Portugalii">Wybierz temat</button>
+          </article>
+          <article class="idea-card">
+            <h3>Dzień z życia olimpijczyka Olimpiady Matematycznej</h3>
+            <p>Pokaż, jak wyglądają przygotowania, rozwiązywanie zadań i chwile odpoczynku poza matematyką.</p>
+            <button class="btn btn-ghost topic-button" type="button" data-title="Dzień z życia olimpijczyka Olimpiady Matematycznej">Wybierz temat</button>
+          </article>
+          <article class="idea-card">
+            <h3>Jak powstaje szkolne przedstawienie?</h3>
+            <p>Zajrzyj za kulisy prób, pomyłek i współpracy, dzięki którym spektakl trafia na scenę.</p>
+            <button class="btn btn-ghost topic-button" type="button" data-title="Jak powstaje szkolne przedstawienie?">Wybierz temat</button>
+          </article>
+          <article class="idea-card">
+            <h3>Moje sprawdzone sposoby na szkolny tydzień</h3>
+            <p>Podziel się trikami na naukę, organizację czasu albo złapanie oddechu po lekcjach.</p>
+            <button class="btn btn-ghost topic-button" type="button" data-title="Moje sprawdzone sposoby na szkolny tydzień">Wybierz temat</button>
+          </article>
+        </div>
+        <p class="contest-note"><strong>Co dalej?</strong> Przeczytamy zgłoszenia, wybierzemy zwycięski tekst i skontaktujemy się z autorem przez podany podpis lub klasę. Przed publikacją uzgodnimy z Tobą ostateczną wersję.</p>
+      </div>
+    </section>
+
+    <section class="section" id="zgloszenie">
+      <div class="wrap">
+        <div class="form-card">
+          <div id="panel-form">
+            <h2>Zgłoś swój tekst</h2>
+            <p class="sub">Wklej gotowy wpis. Podpis może być pseudonimem; klasa jest opcjonalna.</p>
+            <form class="form" id="blog-form" novalidate>
+              <div class="field">
+                <label class="field-label" for="blog-title">Tytuł wpisu</label>
+                <input class="input" id="blog-title" name="title" maxlength="140" placeholder="Nadaj swojemu wpisowi tytuł" aria-describedby="err-title">
+                <p class="field-error" id="err-title" hidden></p>
+              </div>
+              <div class="field">
+                <label class="field-label" for="blog-text">Treść bloga</label>
+                <textarea class="textarea" id="blog-text" name="text" maxlength="20000" placeholder="Wklej tutaj swój tekst…" aria-describedby="blog-count err-text"></textarea>
+                <div class="field-meta"><span>Co najmniej 100 znaków</span><span class="count" id="blog-count">0 / 20 000</span></div>
+                <p class="field-error" id="err-text" hidden></p>
+              </div>
+              <div class="row">
+                <div class="field">
+                  <label class="field-label" for="blog-author">Podpis lub pseudonim</label>
+                  <input class="input" id="blog-author" name="author" maxlength="60" placeholder="Jak mamy podpisać wpis?" autocomplete="nickname" aria-describedby="err-author">
+                  <p class="field-error" id="err-author" hidden></p>
+                </div>
+                <div class="field">
+                  <label class="field-label" for="blog-class">Klasa <small>(opcjonalnie)</small></label>
+                  <input class="input" id="blog-class" name="class" maxlength="12" placeholder="np. 2C" autocomplete="off">
+                </div>
+              </div>
+              <div class="form-submit">
+                <button class="btn" type="submit" id="blog-submit">Wyślij zgłoszenie <span aria-hidden="true">→</span></button>
+                <p>Zgłoszenia czyta wyłącznie komitet 4 dla 3.</p>
+              </div>
+              <p class="status" id="blog-status" role="status" aria-live="polite"></p>
+            </form>
+          </div>
+          <div class="panel-msg" id="panel-ok" hidden>
+            <h2 tabindex="-1" id="ok-title">Zgłoszenie zapisane. Dziękujemy!</h2>
+            <p>Twój tekst trafił do komitetu 4 dla 3. Damy znać, jeśli wybierzemy go do publikacji.</p>
+            <div class="panel-actions"><button class="btn" type="button" id="ok-again">Zgłoś kolejny tekst</button></div>
+          </div>
+          <div class="panel-msg" id="panel-fallback" hidden>
+            <h2 tabindex="-1" id="fallback-title">Skopiuj zgłoszenie i przekaż je komitetowi</h2>
+            <p>Ta wersja strony nie ma dostępu do skrzynki konkursowej, więc tekst nie został wysłany. Skopiuj go i prześlij komuś z komitetu 4 dla 3.</p>
+            <label class="sr-only" for="fallback-text">Tekst zgłoszenia do skopiowania</label>
+            <textarea class="textarea" id="fallback-text" readonly></textarea>
+            <div class="panel-actions">
+              <button class="btn" type="button" id="copy-submission">Kopiuj zgłoszenie</button>
+              <button class="btn btn-ghost" type="button" id="back-to-form">Wróć do formularza</button>
+            </div>
+            <p class="copy-note" id="copy-note" role="status" aria-live="polite"></p>
+          </div>
+        </div>
+
+        <section class="inbox" id="blog-inbox" aria-labelledby="inbox-title" hidden>
+          <span class="eyebrow">Widoczne tylko dla komitetu</span>
+          <h2 id="inbox-title">Zgłoszenia konkursowe</h2>
+          <p id="inbox-status" class="status" role="status" aria-live="polite">Wczytywanie zgłoszeń…</p>
+          <ul class="inbox-list" id="inbox-list"></ul>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <span>4 dla 3 · III LO im. Adama Mickiewicza we Wrocławiu</span>
+      <a href="index.html">Wróć na stronę główną</a>
+    </div>
+  </footer>
+
+  <script>
+    (() => {
+      const $ = (selector, root = document) => root.querySelector(selector);
+      const form = $('#blog-form');
+      const title = $('#blog-title');
+      const text = $('#blog-text');
+      const author = $('#blog-author');
+      const className = $('#blog-class');
+      const submit = $('#blog-submit');
+      const status = $('#blog-status');
+      const MAX = 20000;
+      const MIN = 100;
+
+      const updateCount = () => {
+        const length = text.value.length;
+        $('#blog-count').textContent = length.toLocaleString('pl-PL') + ' / 20 000';
+        $('#blog-count').classList.toggle('is-over', length > MAX);
+      };
+      text.addEventListener('input', updateCount);
+      updateCount();
+
+      document.querySelectorAll('.topic-button').forEach(button => {
+        button.addEventListener('click', () => {
+          title.value = button.dataset.title;
+          $('#zgloszenie').scrollIntoView({ behavior: 'smooth' });
+          title.focus({ preventScroll: true });
+        });
+      });
+
+      const setError = (id, message) => {
+        const element = $('#' + id);
+        element.textContent = message;
+        element.hidden = !message;
+      };
+      const show = panel => {
+        $('#panel-form').hidden = panel !== 'form';
+        $('#panel-ok').hidden = panel !== 'ok';
+        $('#panel-fallback').hidden = panel !== 'fallback';
+      };
+
+      let db = null;
+      let uid = null;
+      let canWrite = null;
+      const caps = (async () => {
+        const runtime = window.claude;
+        if (!runtime || typeof runtime.use !== 'function') return;
+        let user = null;
+        try {
+          [db, user] = await Promise.all([runtime.use('db'), runtime.use('user')]);
+        } catch (_) {
+          db = null;
+          return;
+        }
+        if (!user) return;
+        try { uid = await user.id(); } catch (_) { uid = null; }
+        try { canWrite = await user.can('data.write'); } catch (_) { canWrite = null; }
+        let editor = false;
+        try { editor = await user.canEdit(); } catch (_) { editor = false; }
+        if (editor && db) startInbox();
+      })();
+
+      const fallback = entry => {
+        const lines = [
+          'Konkurs blogowy 4 dla 3',
+          'Tytuł: ' + entry.title,
+          'Autor: ' + entry.author
+        ];
+        if (entry.className) lines.push('Klasa: ' + entry.className);
+        lines.push('', entry.text);
+        $('#fallback-text').value = lines.join('\n');
+        $('#copy-note').textContent = '';
+        status.textContent = '';
+        show('fallback');
+        $('#fallback-title').focus();
+      };
+
+      form.addEventListener('submit', async event => {
+        event.preventDefault();
+        const titleValue = title.value.trim();
+        const textValue = text.value.trim();
+        const authorValue = author.value.trim();
+        let firstInvalid = null;
+
+        if (titleValue.length < 3) {
+          setError('err-title', 'Podaj tytuł składający się z co najmniej 3 znaków.');
+          firstInvalid = title;
+        } else setError('err-title', '');
+        if (textValue.length < MIN) {
+          setError('err-text', 'Wpis powinien mieć co najmniej ' + MIN + ' znaków.');
+          firstInvalid = firstInvalid || text;
+        } else if (textValue.length > MAX) {
+          setError('err-text', 'Skróć tekst do ' + MAX.toLocaleString('pl-PL') + ' znaków.');
+          firstInvalid = firstInvalid || text;
+        } else setError('err-text', '');
+        if (authorValue.length < 2) {
+          setError('err-author', 'Podaj podpis lub pseudonim (co najmniej 2 znaki).');
+          firstInvalid = firstInvalid || author;
+        } else setError('err-author', '');
+        if (firstInvalid) {
+          firstInvalid.focus();
+          return;
+        }
+
+        const entry = {
+          id: Math.random().toString(36).slice(2, 10) + Date.now().toString(36),
+          title: titleValue,
+          text: textValue,
+          author: authorValue.slice(0, 60),
+          className: className.value.trim().slice(0, 12),
+          at: new Date().toISOString()
+        };
+
+        submit.disabled = true;
+        status.textContent = 'Wysyłanie zgłoszenia…';
+        try {
+          await caps;
+          if (!db || !uid || canWrite === false) {
+            fallback(entry);
+            return;
+          }
+          const ref = db.doc('blogs/' + uid);
+          const snapshot = await ref.get();
+          const data = snapshot.exists ? snapshot.data() || {} : {};
+          const items = Array.isArray(data.items) ? data.items.slice() : [];
+          if (items.length >= 30) {
+            status.textContent = 'Wysłano już maksymalną liczbę zgłoszeń. Przekaż kolejny tekst komuś z komitetu.';
+            return;
+          }
+          items.push(entry);
+          await ref.set({ items, updatedAt: entry.at });
+          form.reset();
+          updateCount();
+          status.textContent = '';
+          show('ok');
+          $('#ok-title').focus();
+        } catch (error) {
+          const code = error && error.code;
+          if (['invalid_argument', 'not_granted', 'capability_disabled', 'capability_removed', 'revoked'].includes(code)) {
+            canWrite = false;
+            fallback(entry);
+          } else {
+            status.textContent = 'Nie udało się wysłać zgłoszenia. Sprawdź połączenie i spróbuj ponownie.';
+          }
+        } finally {
+          submit.disabled = false;
+        }
+      });
+
+      $('#ok-again').addEventListener('click', () => {
+        show('form');
+        title.focus();
+      });
+      $('#back-to-form').addEventListener('click', () => {
+        show('form');
+        title.focus();
+      });
+      $('#copy-submission').addEventListener('click', () => {
+        const target = $('#fallback-text');
+        const note = $('#copy-note');
+        const selectText = () => {
+          target.focus();
+          target.select();
+          note.textContent = 'Tekst jest zaznaczony. Skopiuj go ręcznie.';
+        };
+        if (!navigator.clipboard || !navigator.clipboard.writeText) {
+          selectText();
+          return;
+        }
+        navigator.clipboard.writeText(target.value).then(
+          () => { note.textContent = 'Skopiowano do schowka.'; },
+          selectText
+        );
+      });
+
+      function startInbox() {
+        $('#blog-inbox').hidden = false;
+        db.collection('blogs').onSnapshot(snapshot => {
+          const entries = [];
+          snapshot.docs.forEach(doc => {
+            const data = doc.data() || {};
+            if (Array.isArray(data.items)) {
+              data.items.forEach(item => {
+                if (item && typeof item.title === 'string' && typeof item.text === 'string') entries.push(item);
+              });
+            }
+          });
+          entries.sort((a, b) => String(b.at || '').localeCompare(String(a.at || '')));
+          const list = $('#inbox-list');
+          list.textContent = '';
+          entries.forEach(entry => {
+            const item = document.createElement('li');
+            item.className = 'submission';
+            const heading = document.createElement('h3');
+            heading.textContent = entry.title;
+            const body = document.createElement('p');
+            body.textContent = entry.text;
+            const meta = document.createElement('small');
+            const details = [entry.author || 'Bez podpisu'];
+            if (entry.className) details.push('Klasa ' + entry.className);
+            const date = new Date(entry.at);
+            if (!Number.isNaN(date.getTime())) {
+              details.push(new Intl.DateTimeFormat('pl-PL', { dateStyle: 'medium', timeStyle: 'short' }).format(date));
+            }
+            meta.textContent = details.join(' · ');
+            item.append(heading, body, meta);
+            list.append(item);
+          });
+          $('#inbox-status').textContent = entries.length
+            ? entries.length + (entries.length === 1 ? ' zgłoszenie w skrzynce.' : ' zgłoszeń w skrzynce.')
+            : 'Skrzynka konkursowa jest jeszcze pusta.';
+        }, () => {
+          $('#inbox-status').textContent = 'Nie udało się wczytać zgłoszeń. Odśwież stronę.';
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

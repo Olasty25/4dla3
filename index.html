@@ -103,7 +103,11 @@ a { color: inherit; }
 }
 .nav a:not(.btn):hover::after { transform: scaleX(1); transform-origin: left; }
 @media (max-width: 860px) { .nav a:not(.btn) { display: none; } }
-@media (max-width: 520px) { .brand-text { display: none; } }
+@media (max-width: 520px) {
+  .brand-text { display: none; }
+  .nav { gap: 8px; }
+  .nav .btn { font-size: .78rem; padding: .55em .65em; }
+}
 
 /* ---------- Buttons ---------- */
 .btn {
@@ -395,6 +399,7 @@ a { color: inherit; }
       <a href="#program">Program</a>
       <a href="#komitet">Komitet</a>
       <a href="#pomysly">Pomysły</a>
+      <a class="btn btn-sm btn-ghost" href="blog.html">Konkurs blogowy</a>
       <a class="btn btn-sm" href="#pomysly">Zgłoś pomysł</a>
     </nav>
   </div>
@@ -406,7 +411,7 @@ a { color: inherit; }
       <div>
         <span class="label kicker"><svg class="mini-slashes" aria-hidden="true"><use href="#slashes"/></svg>Wybory do Samorządu Szkolnego · III LO we Wrocławiu</span>
         <h1 class="hero-title">
-          <span class="line"><span style="--i:0">Czwórka</span></span>
+          <span class="line"><span style="--i:0">Czterech</span></span>
           <span class="line"><span style="--i:1">dla <em>Trójki.</em></span></span>
         </h1>
         <p class="hero-lead">Jesteśmy komitetem 4 dla 3. Startujemy w wyborach do Samorządu Szkolnego III LO im. Adama Mickiewicza, bo chcemy, żeby w szkole działo się więcej, a sprawy uczniów były załatwiane szybko i jawnie. Program piszemy razem z Wami.</p>

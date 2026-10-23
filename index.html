@@ -638,6 +638,7 @@ a { color: inherit; }
   </div>
 </footer>
 
+<script src="db.js"></script>
 <script>
 (() => {
   const $ = (s, r = document) => r.querySelector(s);
@@ -703,6 +704,9 @@ a { color: inherit; }
 
   const setError = (id, msg) => { const el = $('#' + id); el.textContent = msg || ''; el.hidden = !msg; };
 
+  /* Submissions go to the Supabase database from db.js when it is configured */
+  const remoteDb = window.submissionsDb;
+
   /* Runtime capabilities: shared store for submissions, viewer identity */
   let db = null, user = null, uid = null, canWrite = null;
   const caps = (async () => {
@@ -754,19 +758,23 @@ a { color: inherit; }
     submit.classList.add('is-busy');
     status.textContent = 'Wysyłanie…';
     try {
-      await caps;
-      if (!db || !uid || canWrite === false) { showFallback(entry); return; }
-      let ref;
-      try { ref = db.doc('ideas/' + uid); } catch (_) { showFallback(entry); return; }
-      const snap = await ref.get();
-      const data = snap.exists ? (snap.data() || {}) : {};
-      const items = Array.isArray(data.items) ? data.items.slice() : [];
-      if (items.length >= PER_PERSON) {
-        status.textContent = 'Masz już ' + PER_PERSON + ' zgłoszeń. Kolejne przekaż nam osobiście.';
-        return;
+      if (remoteDb && remoteDb.enabled) {
+        await remoteDb.insert('ideas', { category: entry.category, text: entry.text, klasa: entry.klasa, podpis: entry.podpis });
+      } else {
+        await caps;
+        if (!db || !uid || canWrite === false) { showFallback(entry); return; }
+        let ref;
+        try { ref = db.doc('ideas/' + uid); } catch (_) { showFallback(entry); return; }
+        const snap = await ref.get();
+        const data = snap.exists ? (snap.data() || {}) : {};
+        const items = Array.isArray(data.items) ? data.items.slice() : [];
+        if (items.length >= PER_PERSON) {
+          status.textContent = 'Masz już ' + PER_PERSON + ' zgłoszeń. Kolejne przekaż nam osobiście.';
+          return;
+        }
+        items.push(entry);
+        await ref.set({ items, updatedAt: entry.at });
       }
-      items.push(entry);
-      await ref.set({ items, updatedAt: entry.at });
       form.reset();
       updateCount();
       status.textContent = '';

@@ -18,28 +18,45 @@
       --line-strong: #d8cccd;
       --red: #c21d25;
       --red-soft: #fcedee;
-      --font-display: "Jost", "Futura", "Century Gothic", system-ui, sans-serif;
-      --font-body: "Hanken Grotesk", "Segoe UI", Arial, system-ui, sans-serif;
+      --on-red: #fff;
+      --font-display: "Jost", "Futura", "Century Gothic", "Avenir Next", system-ui, sans-serif;
+      --font-body: "Hanken Grotesk", "Segoe UI", "Helvetica Neue", Arial, system-ui, sans-serif;
       --ease: cubic-bezier(.2, .8, .2, 1);
     }
     * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    html, body { overflow-x: clip; }
     html { scroll-behavior: smooth; }
     body {
       margin: 0; background: var(--bg); color: var(--ink);
       font: 1.0625rem/1.6 var(--font-body); -webkit-font-smoothing: antialiased;
+    }
+    body::before {
+      content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+      z-index: 30; background: var(--bg);
     }
     a { color: inherit; }
     h1, h2, h3 { margin: 0; font-family: var(--font-display); text-wrap: balance; }
     p { margin: 0; }
     :focus-visible { outline: 3px solid var(--red); outline-offset: 3px; }
     .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
-    .wrap { width: min(1120px, calc(100% - 40px)); margin-inline: auto; }
-    .site-header { position: sticky; top: 0; z-index: 20; background: #fff; border-bottom: 1px solid transparent; transition: border-color .3s; }
+    .wrap {
+      max-width: 1200px; margin-inline: auto;
+      padding-left: max(16px, env(safe-area-inset-left, 0px));
+      padding-right: max(16px, env(safe-area-inset-right, 0px));
+    }
+    @media (min-width: 720px) {
+      .wrap { padding-left: max(32px, env(safe-area-inset-left, 0px)); padding-right: max(32px, env(safe-area-inset-right, 0px)); }
+    }
+    .site-header {
+      position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+      background: var(--bg); border-bottom: 1px solid transparent; transition: border-color .3s;
+    }
     .site-header.is-compact { border-bottom-color: var(--line); }
-    .header-inner { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-block: 10px; }
     .brand { display: flex; align-items: center; gap: 14px; min-width: 0; text-decoration: none; }
-    .brand-mark { display: grid; place-items: center; width: 52px; height: 52px; flex: none; border: 2px solid var(--ink); color: var(--red); font: 700 1.05rem var(--font-display); }
-    .brand-sep { width: 1px; height: 40px; flex: none; background: var(--line-strong); }
+    .brand img { width: 52px; height: 52px; display: block; flex: none; }
+    #top-sentinel { position: absolute; top: 0; left: 0; width: 1px; height: 24px; pointer-events: none; }
     .brand-text { display: grid; line-height: 1.25; }
     .brand-text strong { font: 600 1rem var(--font-display); }
     .brand-text span { color: var(--muted); font-size: .82rem; }
@@ -47,15 +64,31 @@
     .nav a:not(.btn) { position: relative; padding-block: 4px; font: 500 .98rem var(--font-display); text-decoration: none; }
     .nav a:not(.btn)::after { content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 2px; background: var(--red); transform: scaleX(0); transform-origin: right; transition: transform .35s var(--ease); }
     .nav a:not(.btn):hover::after { transform: scaleX(1); transform-origin: left; }
-    .btn {
-      display: inline-flex; justify-content: center; align-items: center; gap: .55em;
-      border: 2px solid var(--red); padding: .68em 1.1em; background: var(--red); color: #fff;
-      font: 600 1rem var(--font-display); text-decoration: none; cursor: pointer;
-      transition: background .2s, color .2s, transform .2s;
+    @media (max-width: 860px) { .nav a:not(.btn) { display: none; } }
+    @media (max-width: 520px) {
+      .brand-text { display: none; }
+      .nav { gap: 8px; }
+      .nav .btn { font-size: .78rem; padding: .55em .65em; }
     }
-    .btn:hover { background: var(--ink); border-color: var(--ink); color: #fff; }
+    .btn {
+      --btn-bg: var(--red); --btn-fg: var(--on-red); --btn-bd: var(--red); --sweep: var(--ink); --sweep-fg: var(--bg);
+      display: inline-flex; align-items: center; justify-content: center; gap: .6em;
+      font-family: var(--font-display); font-weight: 600; font-size: 1.02rem; letter-spacing: .01em;
+      padding: .82em 1.35em; border: 2px solid var(--btn-bd); border-radius: 0;
+      background: var(--btn-bg); color: var(--btn-fg); text-decoration: none; cursor: pointer;
+      position: relative; overflow: hidden; isolation: isolate;
+      transition: color .35s var(--ease), border-color .35s var(--ease), transform .2s;
+    }
+    .btn::before {
+      content: ""; position: absolute; top: -2px; bottom: -2px; left: -25%; width: 150%;
+      background: var(--sweep); z-index: -1;
+      transform: translateX(-105%) skewX(-34deg); transition: transform .5s var(--ease);
+    }
+    .btn:hover::before, .btn:focus-visible::before { transform: translateX(0) skewX(-34deg); }
+    .btn:hover, .btn:focus-visible { color: var(--sweep-fg); border-color: var(--sweep); }
     .btn:active { transform: translateY(1px); }
-    .btn-ghost { color: var(--ink); background: transparent; border-color: var(--ink); }
+    .btn-sm { font-size: .92rem; padding: .62em 1.05em; }
+    .btn-ghost { --btn-bg: transparent; --btn-fg: var(--ink); --btn-bd: var(--ink); --sweep: var(--red); --sweep-fg: var(--on-red); }
     .btn[disabled] { opacity: .65; cursor: progress; }
     .hero { padding-block: clamp(60px, 10vw, 116px) clamp(46px, 7vw, 78px); }
     .eyebrow { color: var(--red); font: 600 .78rem var(--font-display); letter-spacing: .16em; text-transform: uppercase; }
@@ -136,18 +169,12 @@
     .privacy h2 { margin-top: 8px; font-size: clamp(1.7rem, 3vw, 2.2rem); }
     .privacy-copy { display: grid; gap: 12px; max-width: 800px; margin-top: 16px; color: #3b3537; }
     @media (max-width: 680px) {
-      .wrap { width: min(100% - 32px, 1120px); }
-      .header-inner { min-height: 66px; }
-      .brand-text span, .nav a:not(.btn) { display: none; }
-      .nav { gap: 8px; }
-      .nav .btn { padding: .55em .7em; font-size: .85rem; }
       .ideas, .row { grid-template-columns: 1fr; }
       .editor-media { grid-template-columns: 1fr 1fr; }
       .editor-media .input { grid-column: 1 / -1; }
       .section { padding-block: 40px 68px; }
     }
-    @media (max-width: 520px) { .brand-text { display: none; } .nav { gap: 8px; } .nav .btn { padding: .55em .65em; font-size: .78rem; } }
-    @media (max-width: 400px) { .brand-sep { display: none; } .editor-toolbar button { min-width: 34px; padding-inline: 6px; } }
+    @media (max-width: 400px) { .editor-toolbar button { min-width: 34px; padding-inline: 6px; } }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
   </style>
 </head>
@@ -156,14 +183,15 @@
   <header class="site-header" id="site-header">
     <div class="wrap header-inner">
       <a class="brand" href="index.html" aria-label="4 dla 3, strona główna">
-        <span class="brand-mark" aria-hidden="true">4/3</span>
-        <span class="brand-sep" aria-hidden="true"></span>
+        <img src="logo.png" alt="Logo komitetu 4 dla 3" width="52" height="52">
         <span class="brand-text"><strong>Komitet 4 dla 3</strong><span>III LO im. A. Mickiewicza · Wrocław</span></span>
       </a>
       <nav class="nav" aria-label="Nawigacja główna">
-        <a href="index.html">Strona główna</a>
-        <a href="#pomysly">Pomysły na wpis</a>
-        <a class="btn" href="#zgloszenie">Zgłoś bloga</a>
+        <a href="index.html#program">Program</a>
+        <a href="index.html#komitet">Komitet</a>
+        <a href="#pomysly">Tematy</a>
+        <a class="btn btn-sm btn-ghost" href="index.html">Strona główna</a>
+        <a class="btn btn-sm" href="#zgloszenie">Zgłoś bloga</a>
       </nav>
     </div>
   </header>
@@ -242,8 +270,10 @@
                 <button class="btn btn-ghost" id="add-video" type="button">Dodaj film</button>
                 </div>
                 <p class="editor-help" id="media-help">Wstawiaj publiczne adresy zdjęć oraz linki YouTube lub Vimeo.</p>
+                <p class="field-error" id="err-media" role="alert" hidden></p>
                 <div class="field-meta"><span>Co najmniej 100 znaków</span><span class="count" id="blog-count">0 / 20 000</span></div>
                 <p class="field-error" id="err-text" hidden></p>
+                <p class="editor-help" id="draft-note">Szkic zapisuje się automatycznie tylko w tej przeglądarce — do komitetu trafi dopiero po kliknięciu „Wyślij zgłoszenie”.</p>
               </div>
               <div class="row">
                 <div class="field">
@@ -295,7 +325,7 @@
         <h2 id="rodo-title">RODO</h2>
         <div class="privacy-copy">
           <p>W formularzu pomysłów możesz podać treść propozycji, kategorię, klasę i podpis. W zgłoszeniu blogowym możesz podać treść wpisu, podpis lub pseudonim, klasę oraz linki do zdjęć i filmów. Podawaj tylko informacje potrzebne do udziału i nie umieszczaj danych innych osób bez ich zgody.</p>
-          <p>Gdy strona ma dostęp do skrzynki konkursowej, zgłoszenia trafiają do komitetu 4 dla 3, aby rozpatrzyć pomysły lub przeprowadzić konkurs i skontaktować się z autorem w sprawie ewentualnej publikacji. Jeśli strona nie ma dostępu do bazy, zgłoszenie nie jest wysyłane i można je skopiować, by przekazać je organizatorom.</p>
+          <p>Po kliknięciu „Wyślij” zgłoszenie jest zapisywane w bazie danych (Supabase), do której dostęp ma wyłącznie komitet 4 dla 3. Wykorzystujemy je, aby rozpatrzyć pomysły lub przeprowadzić konkurs i skontaktować się z autorem w sprawie ewentualnej publikacji. Jeśli strona nie ma dostępu do bazy, zgłoszenie nie jest wysyłane i można je skopiować, by przekazać je organizatorom.</p>
           <p>Wpisywany szkic jest automatycznie przechowywany lokalnie w pamięci przeglądarki na używanym urządzeniu. Nie jest przez ten mechanizm wysyłany do komitetu. Możesz usunąć go, kasując treść formularza albo dane witryny w ustawieniach przeglądarki.</p>
           <p>W sprawie przetwarzania zgłoszenia, jego usunięcia lub realizacji praw dotyczących danych skontaktuj się z organizatorem konkursu przez komitet 4 dla 3 w III LO im. Adama Mickiewicza we Wrocławiu.</p>
         </div>
@@ -317,6 +347,7 @@
     </div>
   </footer>
 
+  <script src="db.js"></script>
   <script>
     (() => {
       const $ = (selector, root = document) => root.querySelector(selector);
@@ -331,6 +362,9 @@
       const MIN = 100;
       const DRAFT_KEY = '4dla3-blog-draft-v1';
       const mediaUrl = $('#media-url');
+      const draftNote = $('#draft-note');
+      const DRAFT_HINT = draftNote.textContent;
+      const remoteDb = window.submissionsDb;
       let savedRange = null;
       let saveTimer = null;
 
@@ -487,15 +521,15 @@
           };
           if (!draft.title && !plainText(draft.html) && !draft.author && !draft.className) {
             try { localStorage.removeItem(DRAFT_KEY); } catch (_) {
-              status.textContent = 'Nie udało się usunąć szkicu z tej przeglądarki.';
+              draftNote.textContent = 'Nie udało się usunąć szkicu z tej przeglądarki.';
             }
             return;
           }
           try {
             localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
-            status.textContent = 'Szkic zapisany na tym urządzeniu.';
+            draftNote.textContent = DRAFT_HINT;
           } catch (_) {
-            status.textContent = 'Nie udało się zapisać szkicu w tej przeglądarce.';
+            draftNote.textContent = 'Nie udało się zapisać szkicu w tej przeglądarce.';
           }
         }, 500);
       };
@@ -507,10 +541,10 @@
           text.innerHTML = sanitizeHtml(typeof draft.html === 'string' ? draft.html : '');
           author.value = typeof draft.author === 'string' ? draft.author : '';
           className.value = typeof draft.className === 'string' ? draft.className : '';
-          status.textContent = 'Odtworzono zapisany szkic z tego urządzenia.';
+          draftNote.textContent = 'Przywrócono niewysłany szkic z tej przeglądarki. Zgłoszenie nie zostało jeszcze wysłane.';
         }
       } catch (_) {
-        status.textContent = 'Nie udało się odczytać szkicu z tej przeglądarki.';
+        draftNote.textContent = 'Nie udało się odczytać szkicu z tej przeglądarki.';
       }
 
       form.addEventListener('input', () => {
@@ -544,10 +578,11 @@
       $('#add-image').addEventListener('click', () => {
         const source = safeHttpUrl(mediaUrl.value.trim());
         if (!source) {
-          status.textContent = 'Wpisz prawidłowy adres HTTPS lub HTTP zdjęcia.';
+          setError('err-media', 'Wpisz prawidłowy adres HTTPS lub HTTP zdjęcia.');
           mediaUrl.focus();
           return;
         }
+        setError('err-media', '');
         const image = document.createElement('img');
         image.src = source;
         image.alt = 'Zdjęcie w zgłoszeniu';
@@ -558,10 +593,11 @@
       $('#add-video').addEventListener('click', () => {
         const source = normalizeVideoUrl(mediaUrl.value.trim());
         if (!source) {
-          status.textContent = 'Wpisz prawidłowy link do filmu z YouTube lub Vimeo.';
+          setError('err-media', 'Wpisz prawidłowy link do filmu z YouTube lub Vimeo.');
           mediaUrl.focus();
           return;
         }
+        setError('err-media', '');
         const frame = document.createElement('iframe');
         frame.src = source;
         frame.title = 'Film w zgłoszeniu';
@@ -661,24 +697,37 @@
         submit.disabled = true;
         status.textContent = 'Wysyłanie zgłoszenia…';
         try {
-          await caps;
-          if (!db || !uid || canWrite === false) {
-            fallback(entry);
-            return;
+          if (remoteDb && remoteDb.enabled) {
+            await remoteDb.insert('blog_posts', {
+              title: entry.title,
+              author: entry.author,
+              class_name: entry.className,
+              text: entry.text,
+              html: entry.html,
+              media: entry.media
+            });
+          } else {
+            await caps;
+            if (!db || !uid || canWrite === false) {
+              fallback(entry);
+              return;
+            }
+            const ref = db.doc('blogs/' + uid);
+            const snapshot = await ref.get();
+            const data = snapshot.exists ? snapshot.data() || {} : {};
+            const items = Array.isArray(data.items) ? data.items.slice() : [];
+            if (items.length >= 30) {
+              status.textContent = 'Wysłano już maksymalną liczbę zgłoszeń. Przekaż kolejny tekst komuś z komitetu.';
+              return;
+            }
+            items.push(entry);
+            await ref.set({ items, updatedAt: entry.at });
           }
-          const ref = db.doc('blogs/' + uid);
-          const snapshot = await ref.get();
-          const data = snapshot.exists ? snapshot.data() || {} : {};
-          const items = Array.isArray(data.items) ? data.items.slice() : [];
-          if (items.length >= 30) {
-            status.textContent = 'Wysłano już maksymalną liczbę zgłoszeń. Przekaż kolejny tekst komuś z komitetu.';
-            return;
-          }
-          items.push(entry);
-          await ref.set({ items, updatedAt: entry.at });
           window.clearTimeout(saveTimer);
+          status.textContent = '';
+          draftNote.textContent = DRAFT_HINT;
           try { localStorage.removeItem(DRAFT_KEY); } catch (_) {
-            status.textContent = 'Zgłoszenie zapisano, ale szkicu nie udało się usunąć z tej przeglądarki.';
+            draftNote.textContent = 'Zgłoszenie wysłano, ale szkicu nie udało się usunąć z tej przeglądarki.';
           }
           form.reset();
           text.innerHTML = '';
